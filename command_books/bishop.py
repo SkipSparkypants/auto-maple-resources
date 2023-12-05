@@ -36,6 +36,7 @@ class Key:
     BIG_BANG = 'w'
     SHINING_RAY = 'e'
     FOUNTAIN = 's'
+    MAGIC_SHELL = '3'
 
 #########################
 #       Commands        #
@@ -243,3 +244,13 @@ class Fountain(Command):
             else:
                 press('right', numPresses, down_time=down_time, up_time=up_time)
         press(Key.FOUNTAIN, 3)
+
+
+class Def(Command):
+    """Uses each of Bishop's buffs once. Uses 'Haku Reborn' whenever it is available."""
+
+    def __init__(self):
+        super().__init__(locals())
+
+    def main(self):
+        press(Key.MAGIC_SHELL(3))
