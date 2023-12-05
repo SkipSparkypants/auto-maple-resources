@@ -110,7 +110,7 @@ class Adjust(Command):
 
 
 class Buff(Command):
-    """Uses each of Kanna's buffs once. Uses 'Haku Reborn' whenever it is available."""
+    """Uses each of Bishop's buffs once. Uses 'Haku Reborn' whenever it is available."""
 
     def __init__(self):
         super().__init__(locals())
@@ -124,11 +124,11 @@ class Buff(Command):
     def main(self):
         now = time.time()
         if self.buff_time_10 == 0 or now - self.buff_time_10 > 10:
-            press(Key.HEAL, 2)
+            press(Key.HEAL, 3)
             self.buff_time_10 = now
             
         if self.buff_time_60 == 0 or now - self.buff_time_60 > 60:
-            press(Key.DISPEL, 2)
+            press(Key.DISPEL, 3)
             self.buff_time_60 = now
             
         if self.buff_time == 0 or now - self.buff_time > settings.buff_cooldown: # 180
@@ -141,7 +141,7 @@ class Buff(Command):
             self.buff_time_240 = now
             
         if self.buff_time_300 == 0 or now - self.buff_time_240 > 300:
-            press(Key.RES, 2)
+            press(Key.RES, 3)
             self.buff_time_300 = now
 
 class Teleport(Command):
