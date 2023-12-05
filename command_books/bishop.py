@@ -32,6 +32,9 @@ class Key:
     
     # Skills
     MACRO_ATTACK = 'x'
+    ANGEL_RAY = 'a'
+    BIG_BANG = 'w'
+    SHINING_RAY = 'e'
     FOUNTAIN = 's'
 
 #########################
@@ -134,7 +137,7 @@ class Buff(Command):
             self.buff_time = now
             
         if self.buff_time_240 == 0 or now - self.buff_time_240 > 240:
-            press(Key.MACRO_BUFF, 5, down_time=2.00, up_time=0.05)
+            press(Key.MACRO_BUFF, 2, down_time=2.00, up_time=0.05)
             self.buff_time_240 = now
             
         if self.buff_time_300 == 0 or now - self.buff_time_240 > 300:
@@ -195,6 +198,24 @@ class MacroAttack(Command):
             time.sleep(0.3)
         else:
             time.sleep(0.2)
+
+class AngelRay(Command):
+    """Uses 'AngelRay' once."""
+
+    def main(self):
+        press(Key.ANGEL_RAY, 5)
+        
+class BigBang(Command):
+    """Uses 'BigBang' once."""
+
+    def main(self):
+        press(Key.BIG_BANG, 5)
+        
+class ShiningRay(Command):
+    """Uses 'ShiningRay' once."""
+
+    def main(self):
+        press(Key.SHINING_RAY, 3)
 
 
 class Fountain(Command):
