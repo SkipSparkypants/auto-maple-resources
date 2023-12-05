@@ -23,6 +23,7 @@ class Key:
     # 180
     INF = 'q'
     BAHAMUT = '-'
+    SNAIL = 'z'
     
     # 240
     MACRO_BUFF = 'f'
@@ -120,7 +121,7 @@ class Buff(Command):
         self.buff_time_60 = 0
         self.buff_time_240 = 0
         self.buff_time_300 = 0
-        self.buffs = [Key.INF, Key.BAHAMUT]
+        self.buffs = [Key.INF, Key.BAHAMUT, Key.SNAIL]
 
     def main(self):
         now = time.time()
