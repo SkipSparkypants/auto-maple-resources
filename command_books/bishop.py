@@ -253,4 +253,4 @@ class Def(Command):
         super().__init__(locals())
 
     def main(self):
-        press(Key.MAGIC_SHELL(3))
+        press(Key.MAGIC_SHELL, 3)
