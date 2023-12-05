@@ -3,11 +3,10 @@
     MacroAttack, direction=left, attacks=2, repetitions=1
 *, x=0.331, y=0.238, frequency=1, skip=False, adjust=False
     MacroAttack, direction=left, attacks=2, repetitions=1
+    Fountain, direction=right
 *, x=0.318, y=0.126, frequency=1, skip=False, adjust=False
     MacroAttack, direction=left, attacks=2, repetitions=1
     Move, x=0.166, y=0.238, max_steps=15
-*, x=0.166, y=0.238, frequency=1, skip=False, adjust=False
-    MacroAttack, direction=right, attacks=2, repetitions=1
 *, x=0.086, y=0.079, frequency=1, skip=False, adjust=False
     MacroAttack, direction=right, attacks=2, repetitions=1
 *, x=0.285, y=0.338, frequency=2, skip=False, adjust=False
