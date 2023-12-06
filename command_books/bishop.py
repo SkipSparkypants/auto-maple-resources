@@ -7,6 +7,20 @@ from src.routine.components import Command
 from src.common.vkeys import press, key_down, key_up
 
 
+class Timers(Command):
+    def __new__(cls):
+        if not hasattr(cls, 'instance'):
+            cls.instance = super(Timers, cls).__new__(cls)
+        return cls.instance
+
+    def __init__(self):
+        super().__init__(locals())
+        self.benediction_cast_time = 0
+        self.door_cast_time = 0
+        self.genesis_cast_time = 0
+        self.peacemaker_cast_time = 0
+        self.divine_punishment_cast_time = 0
+
 # List of key mappings
 class Key:
     # Movement
@@ -32,12 +46,15 @@ class Key:
     RES = '4'
     
     # Skills
-    MACRO_ATTACK = 'x'
     ANGEL_RAY = 'a'
-    BIG_BANG = 'w'
-    SHINING_RAY = 'e'
     FOUNTAIN = 's'
     MAGIC_SHELL = '3'
+    DIVINE_PUNISHMENT = 'd'
+    DOOR = 'g'
+    BIG_BANG = 'x'
+    GENESIS = 'e'
+    PEACEMAKER = 'w'
+    BENEDICTION = 't'
 
 #########################
 #       Commands        #
@@ -60,6 +77,14 @@ def step(direction, target):
         elif direction == 'up':
             press(Key.JUMP, 1)
     press(Key.TELEPORT, num_presses)
+
+
+def command_with_cooldown(cmd, now, cast_time, cooldown):
+    if cast_time == 0 or now - cast_time > cooldown:
+        print(f"pressing: {cmd} {cast_time}")
+        press(cmd, 5, down_time=0.2)
+        return True
+    return False
 
 
 class Adjust(Command):
@@ -178,47 +203,43 @@ class Teleport(Command):
         if settings.record_layout:
             config.layout.add(*config.player_pos)
 
-class MacroAttack(Command):
-    """Attacks using 'Shikigami Haunting' in a given direction."""
-
-    def __init__(self, direction, attacks=2, repetitions=1):
+class Attack(Command):
+    """Attacks using in a given direction."""
+    def __init__(self, attacks=2):
         super().__init__(locals())
-        self.direction = settings.validate_horizontal_arrows(direction)
         self.attacks = int(attacks)
-        self.repetitions = int(repetitions)
-
+        self.angel_ray = AngelRay()
+        self.timers = Timers()
     def main(self):
-        time.sleep(0.05)
-        key_down(self.direction)
-        time.sleep(0.05)
-        if config.stage_fright and utils.bernoulli(0.7):
-            time.sleep(utils.rand_float(0.1, 0.3))
-        for _ in range(self.repetitions):
-            press(Key.MACRO_ATTACK, self.attacks, down_time=1.00, up_time=0.05)
-        key_up(self.direction)
-        if self.attacks > 2:
-            time.sleep(0.3)
-        else:
-            time.sleep(0.2)
+        now = time.time()
+        self.angel_ray.main()
+        print("Attacking")
+
+        for _ in range(self.attacks):
+            if command_with_cooldown(Key.BENEDICTION, now, self.timers.benediction_cast_time, 180):
+                self.timers.benediction_cast_time_cast_time = now
+                continue
+            if command_with_cooldown(Key.DOOR, now, self.timers.door_cast_time, 60):
+                self.timers.door_cast_time = now
+                continue
+            if command_with_cooldown(Key.GENESIS, now, self.timers.genesis_cast_time, 30):
+                self.timers.genesis_cast_time = now
+                continue
+            if command_with_cooldown(Key.PEACEMAKER, now, self.timers.peacemaker_cast_time, 10):
+                self.timers.peacemaker_cast_time = now
+                continue
+            if command_with_cooldown(Key.DIVINE_PUNISHMENT, now, self.timers.divine_punishment_cast_time, 1.5):
+                self.timers.peacemaker_cast_time = now
+                continue
+
+            press(Key.BIG_BANG, 5)
 
 class AngelRay(Command):
-    """Uses 'AngelRay' once."""
 
+    """Uses 'AngelRay' once."""
     def main(self):
         press(Key.ANGEL_RAY, 5)
-        
-class BigBang(Command):
-    """Uses 'BigBang' once."""
-
-    def main(self):
-        press(Key.BIG_BANG, 5)
-        
-class ShiningRay(Command):
-    """Uses 'ShiningRay' once."""
-
-    def main(self):
-        press(Key.SHINING_RAY, 3)
-
+        return True
 
 class Fountain(Command):
     """

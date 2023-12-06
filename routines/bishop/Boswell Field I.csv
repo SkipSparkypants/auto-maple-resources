@@ -1,28 +1,14 @@
 *, x=0.848, y=0.192, frequency=1, skip=True, adjust=False
 *, x=0.570, y=0.238, frequency=1, skip=False, adjust=False
-    MacroAttack, direction=left, attacks=2, repetitions=1
-    AngelRay
-    BigBang
-    ShiningRay
+    Attack, attacks=2
 *, x=0.331, y=0.238, frequency=1, skip=False, adjust=False
     Fountain, direction=right
-    AngelRay
-    BigBang
-    ShiningRay
+    Attack, attacks=2
 *, x=0.318, y=0.126, frequency=1, skip=False, adjust=False
-    Move, x=0.166, y=0.238, max_steps=15
-    AngelRay
-    BigBang
-    ShiningRay
+    Attack, attacks=2
 *, x=0.14, y=0.079, frequency=1, skip=False, adjust=False
-    AngelRay
-    BigBang
-    ShiningRay
+    Attack, attacks=2
 *, x=0.285, y=0.338, frequency=2, skip=False, adjust=False
-    AngelRay
-    BigBang
-    ShiningRay
+    Attack, attacks=2
 *, x=0.656, y=0.311, frequency=1, skip=False, adjust=False
-    AngelRay
-    BigBang
-    ShiningRay
+    Attack, attacks=2
