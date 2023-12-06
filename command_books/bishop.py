@@ -81,8 +81,7 @@ def step(direction, target):
 
 def command_with_cooldown(cmd, now, cast_time, cooldown):
     if cast_time == 0 or now - cast_time > cooldown:
-        print(f"pressing: {cmd} {cast_time}")
-        press(cmd, 5, down_time=0.2)
+        press(cmd, 3, down_time=0.2)
         return True
     return False
 
@@ -137,7 +136,7 @@ class Adjust(Command):
 
 
 class Buff(Command):
-    """Uses each of Bishop's buffs once. Uses 'Haku Reborn' whenever it is available."""
+    """Uses each of Bishop's buffs when available."""
 
     def __init__(self):
         super().__init__(locals())
@@ -210,14 +209,14 @@ class Attack(Command):
         self.attacks = int(attacks)
         self.angel_ray = AngelRay()
         self.timers = Timers()
+
     def main(self):
         now = time.time()
         self.angel_ray.main()
-        print("Attacking")
 
         for _ in range(self.attacks):
             if command_with_cooldown(Key.BENEDICTION, now, self.timers.benediction_cast_time, 180):
-                self.timers.benediction_cast_time_cast_time = now
+                self.timers.benediction_cast_time = now
                 continue
             if command_with_cooldown(Key.DOOR, now, self.timers.door_cast_time, 60):
                 self.timers.door_cast_time = now
@@ -229,7 +228,7 @@ class Attack(Command):
                 self.timers.peacemaker_cast_time = now
                 continue
             if command_with_cooldown(Key.DIVINE_PUNISHMENT, now, self.timers.divine_punishment_cast_time, 1.5):
-                self.timers.peacemaker_cast_time = now
+                self.timers.divine_punishment_cast_time = now
                 continue
 
             press(Key.BIG_BANG, 5)
