@@ -33,6 +33,9 @@ class Key:
     
     # 60
     DISPEL = '2'
+
+    # 120
+    EPIC_ADVENTURE = '8'
     
     # 180
     INF = 'q'
@@ -41,6 +44,9 @@ class Key:
     
     # 240
     MACRO_BUFF = 'f'
+
+    # 260
+    BLOOD_OF_THE_DIVINE = '7'
     
     # 300
     RES = '4'
@@ -143,7 +149,9 @@ class Buff(Command):
         self.buff_time = 0
         self.buff_time_10 = 0
         self.buff_time_60 = 0
+        self.buff_time_120 = 0
         self.buff_time_240 = 0
+        self.buff_time_260 = 0
         self.buff_time_300 = 0
         self.buffs = [Key.INF, Key.BAHAMUT, Key.SNAIL]
 
@@ -156,6 +164,10 @@ class Buff(Command):
         if self.buff_time_60 == 0 or now - self.buff_time_60 > 60:
             press(Key.DISPEL, 3)
             self.buff_time_60 = now
+
+        if self.buff_time_120 == 0 or now - self.buff_time_120 > 120:
+            press(Key.EPIC_ADVENTURE, 2, down_time=2.00, up_time=0.05)
+            self.buff_time_120 = now
             
         if self.buff_time == 0 or now - self.buff_time > settings.buff_cooldown: # 180
             for key in self.buffs:
@@ -165,6 +177,10 @@ class Buff(Command):
         if self.buff_time_240 == 0 or now - self.buff_time_240 > 240:
             press(Key.MACRO_BUFF, 2, down_time=2.00, up_time=0.05)
             self.buff_time_240 = now
+
+        if self.buff_time_260 == 0 or now - self.buff_time_260 > 260:
+            press(Key.BLOOD_OF_THE_DIVINE, 2, down_time=2.00, up_time=0.05)
+            self.buff_time_260 = now
             
         if self.buff_time_300 == 0 or now - self.buff_time_240 > 300:
             press(Key.RES, 3)
