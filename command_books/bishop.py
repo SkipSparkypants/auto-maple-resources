@@ -29,38 +29,39 @@ class Key:
 
     # Buffs
     # 10
-    HEAL = '6'
+    HEAL = 'q'
     
     # 60
-    DISPEL = '2'
+    DISPEL = 'f3'
 
     # 120
-    EPIC_ADVENTURE = '8'
+    EPIC_ADVENTURE = 'f2'
     
     # 180
-    INF = 'q'
-    BAHAMUT = '-'
-    SNAIL = 'z'
+    INF = '`'
+    BAHAMUT = 'r'
+    SNAIL = '0'
     
     # 240
-    MACRO_BUFF = 'f'
+    MACRO_BUFF = 'f1'
+    ERDA_NOVA = 'u'
 
     # 260
-    BLOOD_OF_THE_DIVINE = '7'
+    BLOOD_OF_THE_DIVINE = 'y'
     
     # 300
     RES = '4'
     
     # Skills
     ANGEL_RAY = 'a'
-    FOUNTAIN = 's'
+    FOUNTAIN = 'w'
     MAGIC_SHELL = '3'
-    DIVINE_PUNISHMENT = 'd'
-    DOOR = 'g'
-    BIG_BANG = 'x'
-    GENESIS = 'e'
-    PEACEMAKER = 'w'
-    BENEDICTION = 't'
+    DIVINE_PUNISHMENT = 's'
+    DOOR = 'f'
+    BIG_BANG = 'd'
+    GENESIS = '2'
+    PEACEMAKER = 't'
+    BENEDICTION = 'e'
 
 #########################
 #       Commands        #
@@ -85,9 +86,9 @@ def step(direction, target):
     press(Key.TELEPORT, num_presses)
 
 
-def command_with_cooldown(cmd, now, cast_time, cooldown):
+def command_with_cooldown(cmd, now, cast_time, cooldown, down_time=0.2, times=3):
     if cast_time == 0 or now - cast_time > cooldown:
-        press(cmd, 3, down_time=0.2)
+        press(cmd, times, down_time=down_time)
         return True
     return False
 
@@ -176,6 +177,7 @@ class Buff(Command):
             
         if self.buff_time_240 == 0 or now - self.buff_time_240 > 240:
             press(Key.MACRO_BUFF, 2, down_time=2.00, up_time=0.05)
+            press(Key.ERDA_NOVA, 2, down_time=2.00, up_time=0.05)
             self.buff_time_240 = now
 
         if self.buff_time_260 == 0 or now - self.buff_time_260 > 260:
@@ -243,7 +245,7 @@ class Attack(Command):
             if command_with_cooldown(Key.PEACEMAKER, now, self.timers.peacemaker_cast_time, 10):
                 self.timers.peacemaker_cast_time = now
                 continue
-            if command_with_cooldown(Key.DIVINE_PUNISHMENT, now, self.timers.divine_punishment_cast_time, 1.5):
+            if command_with_cooldown(Key.DIVINE_PUNISHMENT, now, self.timers.divine_punishment_cast_time, 10, 0.25, 1):
                 self.timers.divine_punishment_cast_time = now
                 continue
 

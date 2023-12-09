@@ -1,0 +1,18 @@
+*, x=0.282, y=0.329, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.319, y=0.269, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.310, y=0.194, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.449, y=0.120, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.574, y=0.120, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.667, y=0.194, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.690, y=0.269, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.653, y=0.329, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.514, y=0.329, frequency=1, skip=False, adjust=False
+    Attack, attacks=2

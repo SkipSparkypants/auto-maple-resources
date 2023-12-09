@@ -1,28 +1,15 @@
-*, x=0.3, y=0.460, frequency=1, skip=False, adjust=False
-    AngelRay
-    BigBang
-    ShiningRay
+*, x=0.35, y=0.460, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
 *, x=0.270, y=0.27, frequency=1, skip=False, adjust=False
-    AngelRay
-    BigBang
-    ShiningRay
+    Attack, attacks=2
 *, x=0.300, y=0.093, frequency=1, skip=False, adjust=False
-    AngelRay
-    BigBang
-    ShiningRay
+    Attack, attacks=2
 *, x=0.689, y=0.093, frequency=1, skip=False, adjust=False
-    AngelRay
-    BigBang
-    ShiningRay
+    Attack, attacks=2
 *, x=0.7, y=0.302, frequency=1, skip=False, adjust=False
-    AngelRay
-    BigBang
-    ShiningRay
-*, x=0.726, y=0.460, frequency=1, skip=False, adjust=False
-    AngelRay
-    BigBang
-    ShiningRay
+    Attack, attacks=2
+    Fountain, direction=left
+*, x=0.666, y=0.460, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
 *, x=0.497, y=0.45, frequency=1, skip=False, adjust=False
-    AngelRay
-    BigBang
-    ShiningRay
+    Attack, attacks=2
