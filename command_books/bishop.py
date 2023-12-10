@@ -41,6 +41,9 @@ class Key:
     INF = '`'
     BAHAMUT = 'r'
     SNAIL = '0'
+    SPEED_INFUSION = 'f4'
+    SHARP_EYES = 'f5'
+    COMBAT_ORDERS = 'f6'
     
     # 240
     MACRO_BUFF = 'f1'
@@ -73,6 +76,7 @@ def step(direction, target):
     """
 
     num_presses = 2
+    last_pos = config.player_pos
     if direction == 'up' or direction == 'down':
         num_presses = 1
     if config.stage_fright and direction != 'up' and utils.bernoulli(0.75):
@@ -84,6 +88,8 @@ def step(direction, target):
         elif direction == 'up':
             press(Key.JUMP, 1)
     press(Key.TELEPORT, num_presses)
+    if last_pos == config.player_pos:
+        press(Key.JUMP, num_presses)
 
 
 def command_with_cooldown(cmd, now, cast_time, cooldown, down_time=0.2, times=3):
@@ -154,39 +160,47 @@ class Buff(Command):
         self.buff_time_240 = 0
         self.buff_time_260 = 0
         self.buff_time_300 = 0
-        self.buffs = [Key.INF, Key.BAHAMUT, Key.SNAIL]
+        self.buffs = [Key.INF, Key.BAHAMUT, Key.SNAIL, Key.SPEED_INFUSION, Key.SHARP_EYES, Key.COMBAT_ORDERS]
 
     def main(self):
         now = time.time()
-        if self.buff_time_10 == 0 or now - self.buff_time_10 > 10:
-            press(Key.HEAL, 3)
-            self.buff_time_10 = now
-            
-        if self.buff_time_60 == 0 or now - self.buff_time_60 > 60:
-            press(Key.DISPEL, 3)
-            self.buff_time_60 = now
+        for _ in range(2):
+            if self.buff_time_10 == 0 or now - self.buff_time_10 > 10:
+                press(Key.HEAL, 1, down_time=0.3, up_time=0.1)
+                self.buff_time_10 = now
+                continue
 
-        if self.buff_time_120 == 0 or now - self.buff_time_120 > 120:
-            press(Key.EPIC_ADVENTURE, 2, down_time=2.00, up_time=0.05)
-            self.buff_time_120 = now
-            
-        if self.buff_time == 0 or now - self.buff_time > settings.buff_cooldown: # 180
-            for key in self.buffs:
-                press(key, 3, up_time=0.3)
-            self.buff_time = now
-            
-        if self.buff_time_240 == 0 or now - self.buff_time_240 > 240:
-            press(Key.MACRO_BUFF, 2, down_time=2.00, up_time=0.05)
-            press(Key.ERDA_NOVA, 2, down_time=2.00, up_time=0.05)
-            self.buff_time_240 = now
+            if self.buff_time_60 == 0 or now - self.buff_time_60 > 60:
+                press(Key.DISPEL, 1, down_time=0.2, up_time=0.1)
+                self.buff_time_60 = now
+                continue
 
-        if self.buff_time_260 == 0 or now - self.buff_time_260 > 260:
-            press(Key.BLOOD_OF_THE_DIVINE, 2, down_time=2.00, up_time=0.05)
-            self.buff_time_260 = now
-            
-        if self.buff_time_300 == 0 or now - self.buff_time_240 > 300:
-            press(Key.RES, 3)
-            self.buff_time_300 = now
+            if self.buff_time_120 == 0 or now - self.buff_time_120 > 120:
+                press(Key.EPIC_ADVENTURE, 1, down_time=0.2, up_time=0.1)
+                self.buff_time_120 = now
+                continue
+
+            if self.buff_time == 0 or now - self.buff_time > settings.buff_cooldown: # 180
+                for key in self.buffs:
+                    press(key, 1, down_time=0.8, up_time=0.1)
+                self.buff_time = now
+                continue
+
+            if self.buff_time_240 == 0 or now - self.buff_time_240 > 240:
+                press(Key.MACRO_BUFF, 1, down_time=4.00, up_time=0.1)
+                press(Key.ERDA_NOVA, 1, down_time=0.2, up_time=0.1)
+                self.buff_time_240 = now
+                continue
+
+            if self.buff_time_260 == 0 or now - self.buff_time_260 > 260:
+                press(Key.BLOOD_OF_THE_DIVINE, 1, down_time=0.2, up_time=0.1)
+                self.buff_time_260 = now
+                continue
+
+            if self.buff_time_300 == 0 or now - self.buff_time_240 > 300:
+                press(Key.RES, 1, down_time=0.2, up_time=0.1)
+                self.buff_time_300 = now
+                continue
 
 class Teleport(Command):
     """
@@ -245,7 +259,7 @@ class Attack(Command):
             if command_with_cooldown(Key.PEACEMAKER, now, self.timers.peacemaker_cast_time, 10):
                 self.timers.peacemaker_cast_time = now
                 continue
-            if command_with_cooldown(Key.DIVINE_PUNISHMENT, now, self.timers.divine_punishment_cast_time, 10, 0.25, 1):
+            if command_with_cooldown(Key.DIVINE_PUNISHMENT, now, self.timers.divine_punishment_cast_time, 34, 4, 1):
                 self.timers.divine_punishment_cast_time = now
                 continue
 
@@ -292,4 +306,4 @@ class Def(Command):
         super().__init__(locals())
 
     def main(self):
-        press(Key.MAGIC_SHELL, 3)
+        press(Key.MAGIC_SHELL, 1, down_time=0.2)

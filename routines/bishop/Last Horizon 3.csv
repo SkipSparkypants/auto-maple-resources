@@ -1,0 +1,17 @@
+*, x=0.659, y=0.407, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.533, y=0.275, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.820, y=0.234, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.473, y=0.198, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+    Fountain, direction=left
+*, x=0.754, y=0.120, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.281, y=0.120, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.246, y=0.234, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.353, y=0.407, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
