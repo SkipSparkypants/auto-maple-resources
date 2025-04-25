@@ -1,4 +1,4 @@
-"""A collection of all commands that a Bishop can use to interact with the game."""
+"""A collection of all commands that a Hero can use to interact with the game."""
 
 from src.common import config, settings, utils
 import time
@@ -15,11 +15,11 @@ class Timers(Command):
 
     def __init__(self):
         super().__init__(locals())
-        self.benediction_cast_time = 0
-        self.door_cast_time = 0
-        self.genesis_cast_time = 0
-        self.peacemaker_cast_time = 0
-        self.divine_punishment_cast_time = 0
+        self.whirlpool_cast_time = 0
+        self.striking_tide_cast_time = 0
+        self.water_wheel_cast_time = 0
+        self.thunder_clap_cast_time = 0
+        self.waterfall_cast_time = 0
 
 # List of key mappings
 class Key:
@@ -29,42 +29,27 @@ class Key:
 
     # Buffs
     # 10
-    HEAL = 'q'
 
     # 60
-    DISPEL = 'f3'
 
     # 120
-    EPIC_ADVENTURE = 'f2'
 
     # 180
-    INF = '`'
-    BAHAMUT = 'r'
-    SNAIL = '0'
-    SPEED_INFUSION = 'f4'
-    SHARP_EYES = 'f5'
-    COMBAT_ORDERS = 'f6'
+    WARRIOR = '`'
 
     # 240
-    MACRO_BUFF = 'f1'
-    ERDA_NOVA = 'u'
 
     # 260
-    BLOOD_OF_THE_DIVINE = 'y'
 
     # 300
-    RES = '4'
 
     # Skills
-    ANGEL_RAY = 'a'
-    FOUNTAIN = 'w'
-    MAGIC_SHELL = '3'
-    DIVINE_PUNISHMENT = 's'
-    DOOR = 'f'
-    BIG_BANG = 'd'
-    GENESIS = '2'
-    PEACEMAKER = 't'
-    BENEDICTION = 'e'
+    BASIC_SWORD = 'q'
+    WHIRLPOOL = 'w'
+    STRIKING_TIDE = 'e'
+    WATER_WHEEL = 'r'
+    THUNDER_CLAP = 't'
+    WATERFALL = '1'
 
 #########################
 #       Commands        #
@@ -85,9 +70,10 @@ def step(direction, target):
     if abs(d_y) > settings.move_tolerance * 1.5:
         if direction == 'down':
             press(Key.JUMP, 3)
+            time.sleep(0.15)
+            press(Key.TELEPORT, num_presses)
         elif direction == 'up':
             press(Key.JUMP, 1)
-    press(Key.TELEPORT, num_presses)
     if last_pos == config.player_pos:
         press(Key.JUMP, num_presses)
 
@@ -160,23 +146,21 @@ class Buff(Command):
         self.buff_time_240 = 0
         self.buff_time_260 = 0
         self.buff_time_300 = 0
-        self.buffs = [Key.INF, Key.BAHAMUT, Key.SNAIL, Key.SPEED_INFUSION, Key.SHARP_EYES, Key.COMBAT_ORDERS]
+        self.buffs = [Key.WARRIOR]
 
     def main(self):
         now = time.time()
         for _ in range(2):
             if self.buff_time_10 == 0 or now - self.buff_time_10 > 10:
-                press(Key.HEAL, 1, down_time=0.3, up_time=0.1)
+
                 self.buff_time_10 = now
                 continue
 
             if self.buff_time_60 == 0 or now - self.buff_time_60 > 60:
-                press(Key.DISPEL, 1, down_time=0.2, up_time=0.1)
                 self.buff_time_60 = now
                 continue
 
             if self.buff_time_120 == 0 or now - self.buff_time_120 > 120:
-                press(Key.EPIC_ADVENTURE, 1, down_time=0.2, up_time=0.1)
                 self.buff_time_120 = now
                 continue
 
@@ -187,18 +171,14 @@ class Buff(Command):
                 continue
 
             if self.buff_time_240 == 0 or now - self.buff_time_240 > 240:
-                press(Key.MACRO_BUFF, 1, down_time=4.00, up_time=0.1)
-                #press(Key.ERDA_NOVA, 1, down_time=0.2, up_time=0.1)
                 self.buff_time_240 = now
                 continue
 
             if self.buff_time_260 == 0 or now - self.buff_time_260 > 260:
-                press(Key.BLOOD_OF_THE_DIVINE, 1, down_time=0.2, up_time=0.1)
                 self.buff_time_260 = now
                 continue
 
             if self.buff_time_300 == 0 or now - self.buff_time_240 > 300:
-                press(Key.RES, 1, down_time=0.2, up_time=0.1)
                 self.buff_time_300 = now
                 continue
 
@@ -229,7 +209,7 @@ class Teleport(Command):
         if self.direction == 'up':
             key_down(self.direction)
             time.sleep(0.05)
-        press(Key.TELEPORT, num_presses)
+            press(Key.TELEPORT, num_presses)
         key_up(self.direction)
         if settings.record_layout:
             config.layout.add(*config.player_pos)
@@ -239,71 +219,34 @@ class Attack(Command):
     def __init__(self, attacks=2):
         super().__init__(locals())
         self.attacks = int(attacks)
-        self.angel_ray = AngelRay()
         self.timers = Timers()
 
     def main(self):
         now = time.time()
-        self.angel_ray.main()
+        command_with_cooldown(Key.BASIC_SWORD, now, 0.5, 0)
 
         for _ in range(self.attacks):
-            if command_with_cooldown(Key.BENEDICTION, now, self.timers.benediction_cast_time, 180):
-                self.timers.benediction_cast_time = now
+            if command_with_cooldown(Key.WATER_WHEEL, now, self.timers.water_wheel_cast_time, 4):
+                self.timers.water_wheel_cast_time = now
                 continue
-            if command_with_cooldown(Key.DOOR, now, self.timers.door_cast_time, 60):
-                self.timers.door_cast_time = now
+            if command_with_cooldown(Key.WHIRLPOOL, now, self.timers.whirlpool_cast_time, 7):
+                self.timers.whirlpool_cast_time = now
                 continue
-            if command_with_cooldown(Key.GENESIS, now, self.timers.genesis_cast_time, 30):
-                self.timers.genesis_cast_time = now
+            if command_with_cooldown(Key.WATERFALL, now, self.timers.waterfall_cast_time, 10):
+                self.timers.waterfall_cast_time = now
                 continue
-            if command_with_cooldown(Key.PEACEMAKER, now, self.timers.peacemaker_cast_time, 10):
-                self.timers.peacemaker_cast_time = now
+            if command_with_cooldown(Key.STRIKING_TIDE, now, self.timers.striking_tide_cast_time, 120):
+                self.timers.striking_tide_cast_time = now
                 continue
-            if command_with_cooldown(Key.DIVINE_PUNISHMENT, now, self.timers.divine_punishment_cast_time, 34, 4, 1):
-                self.timers.divine_punishment_cast_time = now
+            if command_with_cooldown(Key.THUNDER_CLAP, now, self.timers.thunder_clap_cast_time, 180):
+                self.timers.thunder_clap_cast_time = now
                 continue
-
-            press(Key.BIG_BANG, 5)
-
-class AngelRay(Command):
-
-    """Uses 'AngelRay' once."""
-    def main(self):
-        press(Key.ANGEL_RAY, 5)
-        return True
-
-class Fountain(Command):
-    """
-    Places 'Fountain' in a given direction, or towards the center of the map if
-    no direction is specified.
-    """
-
-    def __init__(self, direction=None):
-        super().__init__(locals())
-        if direction is None:
-            self.direction = direction
-        else:
-            self.direction = settings.validate_horizontal_arrows(direction)
-
-    def main(self):
-        numPresses = 1
-        down_time = 0.3
-        up_time = 0.05
-        if self.direction:
-            press(self.direction, numPresses, down_time=down_time, up_time=up_time)
-        else:
-            if config.player_pos[0] > 0.5:
-                press('left', numPresses, down_time=down_time, up_time=up_time)
-            else:
-                press('right', numPresses, down_time=down_time, up_time=up_time)
-        press(Key.FOUNTAIN, 3)
-
 
 class Def(Command):
     """Uses each of Bishop's buffs once. Uses 'Haku Reborn' whenever it is available."""
 
     def __init__(self):
         super().__init__(locals())
-        
+
     def main(self):
-        press(Key.MAGIC_SHELL, 1, down_time=0.2)
+        return None
