@@ -38,7 +38,8 @@ class Key:
     EPIC_ADVENTURE = 'f2'
 
     # 180
-    INF = '`'
+    INFINITY = '`'
+    INFINITY_2 = '1'
     BAHAMUT = 'r'
     SNAIL = '0'
     SPEED_INFUSION = 'f4'
@@ -160,7 +161,7 @@ class Buff(Command):
         self.buff_time_240 = 0
         self.buff_time_260 = 0
         self.buff_time_300 = 0
-        self.buffs = [Key.INF, Key.BAHAMUT, Key.SNAIL, Key.SPEED_INFUSION, Key.SHARP_EYES, Key.COMBAT_ORDERS]
+        self.buffs = [Key.INFINITY, Key.BAHAMUT, Key.SNAIL, Key.SPEED_INFUSION, Key.SHARP_EYES, Key.COMBAT_ORDERS]
 
     def main(self):
         now = time.time()
@@ -182,9 +183,11 @@ class Buff(Command):
 
             if self.buff_time == 0 or now - self.buff_time > settings.buff_cooldown: # 180
                 for key in self.buffs:
-                    press(key, 1, down_time=0.8, up_time=0.1)
+                    press(key, 1, down_time=0.5, up_time=0.1)
                 self.buff_time = now
                 continue
+            else:
+                press(Key.INFINITY_2, 1, down_time=0.2, up_time=0.1)
 
             if self.buff_time_240 == 0 or now - self.buff_time_240 > 240:
                 press(Key.MACRO_BUFF, 1, down_time=4.00, up_time=0.1)
@@ -236,7 +239,7 @@ class Teleport(Command):
 
 class Attack(Command):
     """Attacks using in a given direction."""
-    def __init__(self, attacks=2):
+    def __init__(self, attacks=1):
         super().__init__(locals())
         self.attacks = int(attacks)
         self.angel_ray = AngelRay()
@@ -244,7 +247,6 @@ class Attack(Command):
 
     def main(self):
         now = time.time()
-        self.angel_ray.main()
 
         for _ in range(self.attacks):
             if command_with_cooldown(Key.BENEDICTION, now, self.timers.benediction_cast_time, 180):
