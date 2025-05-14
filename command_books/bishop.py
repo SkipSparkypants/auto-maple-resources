@@ -278,7 +278,7 @@ class Attack(Command):
                 self.timers.erda_shower_cast_time = now
                 continue
 
-            press(Key.BIG_BANG, 5)
+        press(Key.BIG_BANG, 5)
 
 class AngelRay(Command):
 
