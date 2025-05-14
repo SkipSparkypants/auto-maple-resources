@@ -66,6 +66,7 @@ class Key:
     GENESIS = '2'
     PEACEMAKER = 't'
     BENEDICTION = 'e'
+    SOL_JANUS = 'l'
 
 #########################
 #       Commands        #
@@ -299,6 +300,14 @@ class Fountain(Command):
             else:
                 press('right', numPresses, down_time=down_time, up_time=up_time)
         press(Key.FOUNTAIN, 3)
+
+class SolJanus(Command):
+    """
+    Places 'Sol Janus'.
+    """
+
+    def main(self):
+        press(Key.SOL_JANUS, 3)
 
 
 class Def(Command):
