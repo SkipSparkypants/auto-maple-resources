@@ -209,11 +209,11 @@ class Buff(Command):
                 continue
 
             if self.infinity_buff_time == 0 or now - self.infinity_buff_time > 180:
-                press(Key.INFINITY, 1, down_time=0.5, up_time=0.1)
+                press(Key.INFINITY, 1, down_time=0.3, up_time=0.1)
                 self.infinity_buff_time = now
             elif (now - self.infinity_buff_time > 60 and
-                  (self.infinity_buff_time_2 == 0 or now - self.infinity_buff_time_2)):
-                press(Key.INFINITY_2, 1, down_time=0.5, up_time=0.1)
+                  (self.infinity_buff_time_2 == 0 or now - self.infinity_buff_time_2 > 180)):
+                press(Key.INFINITY_2, 1, down_time=0.3, up_time=0.1)
 
 class Teleport(Command):
     """
