@@ -20,6 +20,7 @@ class Timers(Command):
         self.genesis_cast_time = 0
         self.peacemaker_cast_time = 0
         self.divine_punishment_cast_time = 0
+        self.erda_shower_cast_time = 0
 
 # List of key mappings
 class Key:
@@ -67,6 +68,7 @@ class Key:
     PEACEMAKER = 't'
     BENEDICTION = 'e'
     SOL_JANUS = 'l'
+    ERDA_SHOWER = '8'
 
 #########################
 #       Commands        #
@@ -162,7 +164,9 @@ class Buff(Command):
         self.buff_time_240 = 0
         self.buff_time_260 = 0
         self.buff_time_300 = 0
-        self.buffs = [Key.INFINITY, Key.BAHAMUT, Key.SNAIL, Key.SPEED_INFUSION, Key.SHARP_EYES, Key.COMBAT_ORDERS]
+        self.infinity_buff_time = 0
+        self.infinity_buff_time_2 = 0
+        self.buffs = [Key.BAHAMUT, Key.SNAIL, Key.SPEED_INFUSION, Key.SHARP_EYES, Key.COMBAT_ORDERS]
 
     def main(self):
         now = time.time()
@@ -187,11 +191,9 @@ class Buff(Command):
                     press(key, 1, down_time=0.5, up_time=0.1)
                 self.buff_time = now
                 continue
-            else:
-                press(Key.INFINITY_2, 1, down_time=0.2, up_time=0.1)
 
             if self.buff_time_240 == 0 or now - self.buff_time_240 > 240:
-                press(Key.MACRO_BUFF, 1, down_time=4.00, up_time=0.1)
+                press(Key.MACRO_BUFF, 1, down_time=3.00, up_time=0.1)
                 #press(Key.ERDA_NOVA, 1, down_time=0.2, up_time=0.1)
                 self.buff_time_240 = now
                 continue
@@ -205,6 +207,13 @@ class Buff(Command):
                 press(Key.RES, 1, down_time=0.2, up_time=0.1)
                 self.buff_time_300 = now
                 continue
+
+            if self.infinity_buff_time == 0 or now - self.infinity_buff_time > 180:
+                press(Key.INFINITY, 1, down_time=0.5, up_time=0.1)
+                self.infinity_buff_time = now
+            elif (now - self.infinity_buff_time > 60 and
+                  (self.infinity_buff_time_2 == 0 or now - self.infinity_buff_time_2)):
+                press(Key.INFINITY_2, 1, down_time=0.5, up_time=0.1)
 
 class Teleport(Command):
     """
@@ -262,8 +271,11 @@ class Attack(Command):
             if command_with_cooldown(Key.PEACEMAKER, now, self.timers.peacemaker_cast_time, 10):
                 self.timers.peacemaker_cast_time = now
                 continue
-            if command_with_cooldown(Key.DIVINE_PUNISHMENT, now, self.timers.divine_punishment_cast_time, 34, 4, 1):
+            if command_with_cooldown(Key.DIVINE_PUNISHMENT, now, self.timers.divine_punishment_cast_time, 34, 2, 1):
                 self.timers.divine_punishment_cast_time = now
+                continue
+            if command_with_cooldown(Key.ERDA_SHOWER, now, self.timers.erda_shower_cast_time, 20):
+                self.timers.erda_shower_cast_time = now
                 continue
 
             press(Key.BIG_BANG, 5)
