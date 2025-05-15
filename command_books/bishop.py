@@ -21,6 +21,14 @@ class Timers(Command):
         self.peacemaker_cast_time = 0
         self.divine_punishment_cast_time = 0
         self.erda_shower_cast_time = 0
+        self.heal_cast_time = 0
+        self.infinity_cast_time = 0
+        self.infinity_cast_time_2 = 0
+        self.dispel_cast_time = 0
+        self.epic_adventure_cast_time = 0
+        self.bahamut_cast_time = 0
+        self.snail_cast_time = 0
+        self.blood_of_the_divine_cast_time = 0
 
 # List of key mappings
 class Key:
@@ -91,6 +99,7 @@ def step(direction, target):
             press(Key.JUMP, 3)
         elif direction == 'up':
             press(Key.JUMP, 1)
+    press(Key.BIG_BANG, 2)
     press(Key.TELEPORT, num_presses)
     if last_pos == config.player_pos:
         press(Key.JUMP, num_presses)
@@ -157,65 +166,40 @@ class Buff(Command):
 
     def __init__(self):
         super().__init__(locals())
-        self.buff_time = 0
-        self.buff_time_10 = 0
-        self.buff_time_60 = 0
-        self.buff_time_120 = 0
-        self.buff_time_240 = 0
-        self.buff_time_260 = 0
-        self.buff_time_300 = 0
-        self.infinity_buff_time = 0
-        self.infinity_buff_time_2 = 0
-        self.buffs = [Key.BAHAMUT, Key.SNAIL, Key.SPEED_INFUSION, Key.SHARP_EYES, Key.COMBAT_ORDERS]
+        self.timers = Timers()
 
     def main(self):
-        now = time.time()
         for _ in range(2):
-            if self.buff_time_10 == 0 or now - self.buff_time_10 > 10:
-                press(Key.HEAL, 1, down_time=0.3, up_time=0.1)
-                self.buff_time_10 = now
+            now = time.time()
+            # if command_with_cooldown(Key.HEAL, now, self.timers.heal_cast_time, 10):
+            #     self.timers.heal_cast_time = now
+            #     continue
+
+            if command_with_cooldown(Key.DISPEL, now, self.timers.dispel_cast_time, 60):
+                self.timers.dispel_cast_time = now
                 continue
 
-            if self.buff_time_60 == 0 or now - self.buff_time_60 > 60:
-                press(Key.DISPEL, 1, down_time=0.2, up_time=0.1)
-                self.buff_time_60 = now
+            if command_with_cooldown(Key.EPIC_ADVENTURE, now, self.timers.epic_adventure_cast_time, 120):
+                self.timers.epic_adventure_cast_time = now
                 continue
 
-            if self.buff_time_120 == 0 or now - self.buff_time_120 > 120:
-                press(Key.EPIC_ADVENTURE, 1, down_time=0.2, up_time=0.1)
-                self.buff_time_120 = now
+            if command_with_cooldown(Key.BAHAMUT, now, self.timers.bahamut_cast_time, 180):
+                self.timers.bahamut_cast_time = now
                 continue
 
-            if self.buff_time == 0 or now - self.buff_time > settings.buff_cooldown: # 180
-                for key in self.buffs:
-                    press(key, 1, down_time=0.5, up_time=0.1)
-                self.buff_time = now
+            if command_with_cooldown(Key.SNAIL, now, self.timers.snail_cast_time, 180):
+                self.timers.snail_cast_time = now
                 continue
 
-            if self.buff_time_240 == 0 or now - self.buff_time_240 > 240:
-                press(Key.MACRO_BUFF, 1, down_time=3.00, up_time=0.1)
-                #press(Key.ERDA_NOVA, 1, down_time=0.2, up_time=0.1)
-                self.buff_time_240 = now
+            if command_with_cooldown(Key.BLOOD_OF_THE_DIVINE, now, self.timers.blood_of_the_divine_cast_time, 260):
+                self.timers.blood_of_the_divine_cast_time = now
                 continue
 
-            if self.buff_time_260 == 0 or now - self.buff_time_260 > 260:
-                press(Key.BLOOD_OF_THE_DIVINE, 1, down_time=0.2, up_time=0.1)
-                self.buff_time_260 = now
+            if command_with_cooldown(Key.INFINITY, now, self.timers.infinity_cast_time, 10, down_time=0.3):
+                self.timers.infinity_cast_time = now
                 continue
-
-            if self.buff_time_300 == 0 or now - self.buff_time_240 > 300:
-                press(Key.RES, 1, down_time=0.2, up_time=0.1)
-                self.buff_time_300 = now
-                continue
-
-            if self.infinity_buff_time == 0 or now - self.infinity_buff_time > 180:
-                press(Key.INFINITY, 1, down_time=0.3, up_time=0.1)
-                self.infinity_buff_time = now
-                continue
-            elif (now - self.infinity_buff_time > 60 and
-                  (self.infinity_buff_time_2 == 0 or now - self.infinity_buff_time_2 > 180)):
-                press(Key.INFINITY_2, 1, down_time=0.3, up_time=0.1)
-                self.infinity_buff_time_2 = now
+            elif (now - self.timers.infinity_cast_time > 60) and command_with_cooldown(Key.INFINITY_2, now, self.timers.infinity_cast_time_2, 10, down_time=0.3):
+                self.timers.infinity_cast_time_2 = now
                 continue
 
 class Teleport(Command):
@@ -230,7 +214,8 @@ class Teleport(Command):
         self.jump = settings.validate_boolean(jump)
 
     def main(self):
-        num_presses = 3
+        press(Key.BIG_BANG, 2)
+        num_presses = 2
         time.sleep(0.05)
         if self.direction in ['up', 'down']:
             num_presses = 2
@@ -259,9 +244,8 @@ class Attack(Command):
         self.timers = Timers()
 
     def main(self):
-        now = time.time()
-
         for _ in range(self.attacks):
+            now = time.time()
             if command_with_cooldown(Key.BENEDICTION, now, self.timers.benediction_cast_time, 180):
                 self.timers.benediction_cast_time = now
                 continue
@@ -281,7 +265,7 @@ class Attack(Command):
                 self.timers.erda_shower_cast_time = now
                 continue
 
-        press(Key.BIG_BANG, 5)
+        # press(Key.BIG_BANG, 2)
 
 class AngelRay(Command):
 
