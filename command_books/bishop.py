@@ -200,10 +200,10 @@ class Buff(Command):
                 self.timers.blood_of_the_divine_cast_time = now
                 continue
 
-            if command_with_cooldown(Key.INFINITY, now, self.timers.infinity_cast_time, 180, down_time=0.3):
+            if command_with_cooldown(Key.INFINITY, now, self.timers.infinity_cast_time, 180, down_time=0.2):
                 self.timers.infinity_cast_time = now
                 continue
-            elif (now - self.timers.infinity_cast_time > 60) and command_with_cooldown(Key.INFINITY_2, now, self.timers.infinity_cast_time_2, 180, down_time=0.3):
+            elif (now - self.timers.infinity_cast_time > 80) and command_with_cooldown(Key.INFINITY_2, now, self.timers.infinity_cast_time_2, 180, down_time=0.2):
                 self.timers.infinity_cast_time_2 = now
                 continue
 
