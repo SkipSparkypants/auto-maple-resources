@@ -29,6 +29,7 @@ class Timers(Command):
         self.bahamut_cast_time = 0
         self.snail_cast_time = 0
         self.blood_of_the_divine_cast_time = 0
+        self.spider_cast_time = 0
 
 # List of key mappings
 class Key:
@@ -77,6 +78,7 @@ class Key:
     BENEDICTION = 'e'
     SOL_JANUS = 'l'
     ERDA_SHOWER = '8'
+    SPIDER = '9'
 
 #########################
 #       Commands        #
@@ -89,25 +91,28 @@ def step(direction, target):
 
     num_presses = 2
     last_pos = config.player_pos
-    if direction == 'up' or direction == 'down':
-        num_presses = 1
     if config.stage_fright and direction != 'up' and utils.bernoulli(0.75):
         time.sleep(utils.rand_float(0.1, 0.3))
     d_y = target[1] - config.player_pos[1]
     if abs(d_y) > settings.move_tolerance * 1.5:
         if direction == 'down':
             press(Key.JUMP, 3)
+            time.sleep(0.1)
         elif direction == 'up':
             press(Key.JUMP, 1)
-    press(Key.BIG_BANG, 2)
+            time.sleep(0.1)
+    press(Key.BIG_BANG, 2, up_time=0.05)
+    time.sleep(0.1)
     press(Key.TELEPORT, num_presses)
     if last_pos == config.player_pos:
         press(Key.JUMP, num_presses)
+        press(Key.BIG_BANG, 2, up_time=0.05)
+        press(Key.TELEPORT, 1)
 
 
 def command_with_cooldown(cmd, now, cast_time, cooldown, down_time=0.2, times=3):
     if cast_time == 0 or now - cast_time > cooldown:
-        press(cmd, times, down_time=down_time)
+        press(cmd, times, down_time=down_time, up_time=0.05)
         return True
     return False
 
@@ -195,10 +200,10 @@ class Buff(Command):
                 self.timers.blood_of_the_divine_cast_time = now
                 continue
 
-            if command_with_cooldown(Key.INFINITY, now, self.timers.infinity_cast_time, 10, down_time=0.3):
+            if command_with_cooldown(Key.INFINITY, now, self.timers.infinity_cast_time, 180, down_time=0.3):
                 self.timers.infinity_cast_time = now
                 continue
-            elif (now - self.timers.infinity_cast_time > 60) and command_with_cooldown(Key.INFINITY_2, now, self.timers.infinity_cast_time_2, 10, down_time=0.3):
+            elif (now - self.timers.infinity_cast_time > 60) and command_with_cooldown(Key.INFINITY_2, now, self.timers.infinity_cast_time_2, 180, down_time=0.3):
                 self.timers.infinity_cast_time_2 = now
                 continue
 
@@ -214,7 +219,6 @@ class Teleport(Command):
         self.jump = settings.validate_boolean(jump)
 
     def main(self):
-        press(Key.BIG_BANG, 2)
         num_presses = 2
         time.sleep(0.05)
         if self.direction in ['up', 'down']:
@@ -226,10 +230,11 @@ class Teleport(Command):
             if self.direction == 'down':
                 press(Key.JUMP, 3, down_time=0.1)
             else:
-                press(Key.JUMP, 1)
+                press(Key.JUMP, 2)
         if self.direction == 'up':
             key_down(self.direction)
             time.sleep(0.05)
+        press(Key.BIG_BANG, 2, up_time=0.05)
         press(Key.TELEPORT, num_presses)
         key_up(self.direction)
         if settings.record_layout:
@@ -261,8 +266,11 @@ class Attack(Command):
             if command_with_cooldown(Key.DIVINE_PUNISHMENT, now, self.timers.divine_punishment_cast_time, 34, 2, 1):
                 self.timers.divine_punishment_cast_time = now
                 continue
-            if command_with_cooldown(Key.ERDA_SHOWER, now, self.timers.erda_shower_cast_time, 20):
+            if command_with_cooldown(Key.ERDA_SHOWER, now, self.timers.erda_shower_cast_time, 60):
                 self.timers.erda_shower_cast_time = now
+                continue
+            if command_with_cooldown(Key.SPIDER, now, self.timers.spider_cast_time, 250):
+                self.timers.spider_cast_time = now
                 continue
 
         # press(Key.BIG_BANG, 2)
