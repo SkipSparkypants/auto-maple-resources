@@ -59,7 +59,7 @@ class Key:
 
     # 240
     MACRO_BUFF = 'f1'
-    ERDA_NOVA = 'u'
+    ERDA_NOVA = 'v'
 
     # 260
     BLOOD_OF_THE_DIVINE = 'y'
@@ -210,7 +210,7 @@ class Buff(Command):
             if command_with_cooldown(Key.INFINITY, now, self.timers.infinity_cast_time, 180, down_time=0.2):
                 self.timers.infinity_cast_time = now
                 continue
-            elif (now - self.timers.infinity_cast_time > 80) and command_with_cooldown(Key.INFINITY_2, now, self.timers.infinity_cast_time_2, 180, down_time=0.2):
+            elif (now - self.timers.infinity_cast_time > 100) and command_with_cooldown(Key.INFINITY_2, now, self.timers.infinity_cast_time_2, 180, down_time=0.2):
                 self.timers.infinity_cast_time_2 = now
                 continue
 
