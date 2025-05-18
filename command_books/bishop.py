@@ -313,7 +313,7 @@ class Fountain(Command):
                 press('left', numPresses, down_time=down_time, up_time=up_time)
             else:
                 press('right', numPresses, down_time=down_time, up_time=up_time)
-        press(Key.FOUNTAIN, 3)
+        press(Key.FOUNTAIN, 2)
 
 class SolJanus(Command):
     """
@@ -321,7 +321,7 @@ class SolJanus(Command):
     """
 
     def main(self):
-        press(Key.SOL_JANUS, 3)
+        press(Key.SOL_JANUS, 2)
 
 
 class Def(Command):
