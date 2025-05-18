@@ -270,9 +270,9 @@ class Attack(Command):
             if command_with_cooldown(Key.PEACEMAKER, now, self.timers.peacemaker_cast_time, 10):
                 self.timers.peacemaker_cast_time = now
                 continue
-            if command_with_cooldown(Key.DIVINE_PUNISHMENT, now, self.timers.divine_punishment_cast_time, 34, 2, 1):
-                self.timers.divine_punishment_cast_time = now
-                continue
+            # if command_with_cooldown(Key.DIVINE_PUNISHMENT, now, self.timers.divine_punishment_cast_time, 34, 2, 1):
+            #     self.timers.divine_punishment_cast_time = now
+            #     continue
             if command_with_cooldown(Key.ERDA_SHOWER, now, self.timers.erda_shower_cast_time, 60):
                 self.timers.erda_shower_cast_time = now
                 continue
