@@ -7,6 +7,6 @@
     SolJanus
 *, x=0.547, y=0.1, frequency=1, skip=False, adjust=False
     Attack, attacks=1
-    Fountain, direction=left
+    Fountain, direction=right
 *, x=0.687, y=0.1, frequency=1, skip=False, adjust=False
     Attack, attacks=1

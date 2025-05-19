@@ -1,0 +1,10 @@
+*, x=0.636, y=0.238, frequency=1, skip=False, adjust=False
+    Attack, attacks=1
+*, x=0.632, y=0.086, frequency=1, skip=False, adjust=False
+    Attack, attacks=1
+    SolJanus
+*, x=0.368, y=0.086, frequency=1, skip=False, adjust=False
+    Attack, attacks=1
+    Fountain, direction=left
+*, x=0.407, y=0.238, frequency=1, skip=False, adjust=False
+    Attack, attacks=1
