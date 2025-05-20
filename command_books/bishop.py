@@ -203,7 +203,7 @@ class Buff(Command):
                 self.timers.blood_of_the_divine_cast_time = now
                 continue
 
-            if command_with_cooldown(Key.FAMILIAR, now, self.timers.familiar_cast_time, 7200):
+            if command_with_cooldown(Key.FAMILIAR, now, self.timers.familiar_cast_time, 7200, times=1):
                 self.timers.familiar_cast_time = now
                 continue
 
