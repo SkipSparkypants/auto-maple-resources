@@ -1,0 +1,9 @@
+*, x=0.589, y=0.110, frequency=1, skip=False, adjust=False
+    Attack, attacks=1
+*, x=0.384, y=0.212, frequency=1, skip=False, adjust=False
+    Attack, attacks=1
+*, x=0.534, y=0.370, frequency=1, skip=False, adjust=False
+    Attack, attacks=1
+*, x=0.637, y=0.240, frequency=1, skip=False, adjust=False
+    Attack, attacks=1
+    SolJanus
