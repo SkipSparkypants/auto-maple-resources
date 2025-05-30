@@ -8,9 +8,9 @@
     SolJanus
 *, x=0.182, y=0.197, frequency=1, skip=False, adjust=False
     Attack, attacks=1
-*, x=0.192, y=0.318, frequency=10, skip=False, adjust=False
+*, x=0.192, y=0.118, frequency=10, skip=False, adjust=False
     Attack, attacks=1
-*, x=0.561, y=0.318, frequency=10, skip=False, adjust=False
+*, x=0.561, y=0.118, frequency=10, skip=False, adjust=False
     Attack, attacks=1
-*, x=0.768, y=0.318, frequency=10, skip=False, adjust=False
+*, x=0.768, y=0.118, frequency=10, skip=False, adjust=False
     Attack, attacks=1
