@@ -1,0 +1,10 @@
+*, x=0.480, y=0.209, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.628, y=0.082, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.367, y=0.082, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.653, y=0.276, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
+*, x=0.327, y=0.276, frequency=1, skip=False, adjust=False
+    Attack, attacks=2
