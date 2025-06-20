@@ -8,5 +8,5 @@
 *, x=0.734, y=0.35, frequency=1, skip=False, adjust=False
     Attack, attacks=1
     Fountain, direction=left
-*, x=0.243, y=0.35, frequency=1, skip=False, adjust=False
+*, x=0.2, y=0.35, frequency=1, skip=False, adjust=False
     Attack, attacks=1
