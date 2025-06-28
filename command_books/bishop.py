@@ -30,7 +30,7 @@ class Timers(Command):
         self.snail_cast_time = 0
         self.blood_of_the_divine_cast_time = 0
         self.spider_cast_time = 0
-        self.familiar_cast_time = time.time()
+        self.familiar_cast_time = 0
 
 # List of key mappings
 class Key:
