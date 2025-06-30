@@ -30,7 +30,6 @@ class Timers(Command):
         self.snail_cast_time = 0
         self.blood_of_the_divine_cast_time = 0
         self.spider_cast_time = 0
-        self.familiar_cast_time = 0
 
 # List of key mappings
 class Key:
@@ -80,8 +79,6 @@ class Key:
     SOL_JANUS = 'l'
     ERDA_SHOWER = '8'
     SPIDER = '9'
-
-    FAMILIAR = '-'
 
 #########################
 #       Commands        #
@@ -201,10 +198,6 @@ class Buff(Command):
 
             if command_with_cooldown(Key.BLOOD_OF_THE_DIVINE, now, self.timers.blood_of_the_divine_cast_time, 260):
                 self.timers.blood_of_the_divine_cast_time = now
-                continue
-
-            if command_with_cooldown(Key.FAMILIAR, now, self.timers.familiar_cast_time, 3600, times=1):
-                self.timers.familiar_cast_time = now
                 continue
 
             if command_with_cooldown(Key.INFINITY, now, self.timers.infinity_cast_time, 180, down_time=0.2):
